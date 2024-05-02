@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using HospitalManagement.Data;
+using HospitalManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<IPhongKhamRepository, PhongKhamRepository>();
+builder.Services.AddScoped<IDangKyKhamBenhRepository, DangKyKhamBenhRepository>();
+builder.Services.AddScoped<IHoSoRepository, HoSoRepository>();
 
 var app = builder.Build();
 

@@ -30,10 +30,10 @@ namespace HospitalManagement.Data
         [MaxLength(10)]
         public string? GioKham { get; set; }
 
-        // Tham chiếu tới các bảng
-        [ForeignKey("HoSo")]
+        // Tham chiếu tới HoSo
         public string MaHoSo { get; set; }
         public HoSo HoSo { get; set; }
+
         public PhongKham PhongKham { get; set; }
     }
 }

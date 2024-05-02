@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalManagement.Data
+namespace HospitalManagement.Models
 {
-    [Table("HoSo")]
-    public class HoSo
+    public class HoSoModel
     {
-        [Key]
-        [MaxLength(100)]
         public string MaHoSo { get; set; }
 
-        [MaxLength(13)]
         [Required]
         public string CCCD { get; set; }
 
@@ -32,25 +28,26 @@ namespace HospitalManagement.Data
         [Required]
         [MaxLength(70)]
         public string Email { get; set; }
+
         [Required]
         public bool GioiTinh { get; set; }
 
-        //Address
         [Required]
         [MaxLength(5)]
         public int IdTinh { get; set; }
+
         [Required]
         [MaxLength(5)]
         public int IdHuyen { get; set; }
+
         [Required]
         [MaxLength(5)]
         public int IdXa { get; set; }
+
         [Required]
         [MaxLength(255)]
         public string SoNha { get; set; }
 
-        public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
-
-        public ICollection<DatLich> DatLichs { get; set; }
+        //public ICollection<DatLichModel> DatLichs { get; set; }
     }
 }
