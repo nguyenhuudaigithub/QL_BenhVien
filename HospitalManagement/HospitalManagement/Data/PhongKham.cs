@@ -10,11 +10,13 @@ namespace HospitalManagement.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [MaxLength(11)]
         public int id { get; set; }
-
+        [Required]
+        public int SoLuongToiDa { get; set; }
         [Required]
         public string TenPhongKham { get; set; }
 
         //Tham chiếu tới bảng DatLich
         public DatLich DatLich { get; set; }
+        
     }
 }

@@ -6,6 +6,7 @@ namespace HospitalManagement.Models
     {
         [Required]
         public DateTime NgayKham { get; set; }
+        public int STT { get; set; }
 
         [Required]
         [MaxLength(11)]

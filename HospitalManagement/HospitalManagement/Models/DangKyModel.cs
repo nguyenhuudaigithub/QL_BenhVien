@@ -21,8 +21,8 @@ namespace HospitalManagement.Models
 
         public string Email { get; set; }
         public bool GioiTinh { get; set; }
-        public int IdTinh { get; set; }
-        public int IdHuyen { get; set; }
+        //public int IdTinh { get; set; }
+        //public int IdHuyen { get; set; }
         public int IdXa { get; set; }
         public string SoNha { get; set; }
 

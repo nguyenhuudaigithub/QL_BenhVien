@@ -36,12 +36,12 @@ namespace HospitalManagement.Data
         public bool GioiTinh { get; set; }
 
         //Address
-        [Required]
-        [MaxLength(5)]
-        public int IdTinh { get; set; }
-        [Required]
-        [MaxLength(5)]
-        public int IdHuyen { get; set; }
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdTinh { get; set; }
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdHuyen { get; set; }
         [Required]
         [MaxLength(5)]
         public int IdXa { get; set; }

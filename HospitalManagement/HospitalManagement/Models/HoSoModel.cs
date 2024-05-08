@@ -32,13 +32,13 @@ namespace HospitalManagement.Models
         [Required]
         public bool GioiTinh { get; set; }
 
-        [Required]
-        [MaxLength(5)]
-        public int IdTinh { get; set; }
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdTinh { get; set; }
 
-        [Required]
-        [MaxLength(5)]
-        public int IdHuyen { get; set; }
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdHuyen { get; set; }
 
         [Required]
         [MaxLength(5)]

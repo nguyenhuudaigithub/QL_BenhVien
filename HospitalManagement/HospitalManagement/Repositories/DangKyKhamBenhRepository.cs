@@ -70,8 +70,8 @@ namespace HospitalManagement.Repositories
                     NgaySinh = dangKyModel.NgaySinh,
                     Email = dangKyModel.Email,
                     GioiTinh = dangKyModel.GioiTinh,
-                    IdTinh = dangKyModel.IdTinh,
-                    IdHuyen = dangKyModel.IdHuyen,
+                    //IdTinh = dangKyModel.IdTinh,
+                    //IdHuyen = dangKyModel.IdHuyen,
                     IdXa = dangKyModel.IdXa,
                     SoNha = dangKyModel.SoNha,
                 };
@@ -94,9 +94,17 @@ namespace HospitalManagement.Repositories
                 return 0;
             }
 
+            var slBenhNhanPhong = await _context.DatLichs.Where(b => b.NgayKham == dangKyModel.NgayKham && b.IdPhong == dangKyModel.IdPhong ).ToListAsync();
+
+            if(slBenhNhanPhong.Count >= existingPhongKham.SoLuongToiDa) 
+            {
+                return 0;
+            }
+
             var datLichNew = new DatLich
             {
                 // Gán các giá trị từ dangKyModel cho datLichNew
+                STT = slBenhNhanPhong.Count + 1,
                 NgayKham = dangKyModel.NgayKham,
                 IdPhong = dangKyModel.IdPhong,
                 NgayTao = DateTime.Now, // Gán ngày tạo mới cho ngày tạo
