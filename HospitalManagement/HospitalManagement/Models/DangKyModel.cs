@@ -35,8 +35,8 @@ namespace HospitalManagement.Models
         public DateTime NgayTao { get; set; }
 
         public string? QuocTich { get; set; }
-        public string? DanToc { get; set; }
-        public string? NgheNghiep { get; set; }
+        public int? IdDanToc { get; set; }
+        public int? IdNgheNghiep { get; set; }
         public string? GioKham { get; set; }
 
     }
