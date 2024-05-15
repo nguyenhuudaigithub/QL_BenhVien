@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using HospitalManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Data
 {
@@ -50,6 +52,8 @@ namespace HospitalManagement.Data
         public string SoNha { get; set; }
 
         public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
+
+        public DbSet<KhamBenh> KhamBenhs { get; set; }
 
         public ICollection<DatLich> DatLichs { get; set; }
     }

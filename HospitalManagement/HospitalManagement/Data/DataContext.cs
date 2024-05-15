@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HospitalManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Data
 {
@@ -14,6 +15,7 @@ namespace HospitalManagement.Data
         public DbSet<HoSo> Hosos { get; set; }
         public DbSet<DatLich> DatLichs { get; set; }
         public DbSet<PhongKham> PhongKhams { get; set; }
+        public DbSet<KhamBenh> KhamBenhs { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +33,19 @@ namespace HospitalManagement.Data
                 .WithOne(dl => dl.PhongKham)
                 .HasForeignKey<DatLich>(dl => dl.IdPhong)
                 .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa PhongKham
+
+            base.OnModelCreating(modelBuilder);
+            // 1..n giữa HoSo và KhamBenh
+            modelBuilder.Entity<HoSo>()
+                .HasMany(h => h.KhamBenhs)
+                .WithOne(k => k.HoSo)
+                .HasForeignKey(k => k.MaHoSo);
+
+            // 1..n giữa PhongKham và KhamBenh
+            modelBuilder.Entity<PhongKham>()
+                .HasMany(pk => pk.KhamBenhs)
+                .WithOne(k => k.PhongKham)
+                .HasForeignKey(k => k.IdPhongKham);
 
             base.OnModelCreating(modelBuilder);
         }
