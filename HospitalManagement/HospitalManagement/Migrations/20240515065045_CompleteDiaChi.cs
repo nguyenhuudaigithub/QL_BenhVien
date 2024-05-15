@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospitalManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class CompleteDiaChi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,10 +23,9 @@ namespace HospitalManagement.Migrations
                     NgaySinh = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     GioiTinh = table.Column<bool>(type: "bit", nullable: false),
-                    IdTinh = table.Column<int>(type: "int", maxLength: 5, nullable: false),
-                    IdHuyen = table.Column<int>(type: "int", maxLength: 5, nullable: false),
-                    IdXa = table.Column<int>(type: "int", maxLength: 5, nullable: false),
-                    SoNha = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    IdPhuong = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    SoNha = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    NgayTaoHoSo = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,6 +38,7 @@ namespace HospitalManagement.Migrations
                 {
                     id = table.Column<int>(type: "int", maxLength: 11, nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SoLuongToiDa = table.Column<int>(type: "int", nullable: false),
                     TenPhongKham = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -52,6 +52,7 @@ namespace HospitalManagement.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    STT = table.Column<int>(type: "int", nullable: false),
                     NgayKham = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdPhong = table.Column<int>(type: "int", maxLength: 11, nullable: false),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),

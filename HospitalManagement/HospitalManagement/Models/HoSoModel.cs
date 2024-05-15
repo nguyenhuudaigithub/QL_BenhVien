@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalManagement.Models
 {
@@ -42,7 +41,14 @@ namespace HospitalManagement.Models
 
         [Required]
         [MaxLength(5)]
-        public int IdXa { get; set; }
+        public string IdPhuong { get; set; }
+        public string TenPhuong { get; set; }
+
+        public string IdHuyen { get; set; }
+        public string TenHuyen { get; set; }
+
+        public string IdTinh { get; set; }
+        public string TenTinh { get; set; }
 
         [Required]
         [MaxLength(255)]
