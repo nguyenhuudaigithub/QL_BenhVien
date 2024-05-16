@@ -4,6 +4,7 @@ using HospitalManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240515070954_DanTocDB_NgheNghiepDB")]
+    partial class DanTocDB_NgheNghiepDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +81,6 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<int>("STT")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("IdDanToc")
@@ -120,10 +120,17 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<string>("IdPhuong")
-                        .IsRequired()
+                    b.Property<int>("IdHuyen")
                         .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTinh")
+                        .HasMaxLength(5)
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdXa")
+                        .HasMaxLength(5)
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("NgaySinh")
                         .HasColumnType("datetime2");
@@ -177,9 +184,6 @@ namespace HospitalManagement.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("SoLuongToiDa")
-                        .HasColumnType("int");
 
                     b.Property<string>("TenPhongKham")
                         .IsRequired()

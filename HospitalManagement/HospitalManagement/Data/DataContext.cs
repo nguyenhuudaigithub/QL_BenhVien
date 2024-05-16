@@ -14,6 +14,8 @@ namespace HospitalManagement.Data
         public DbSet<HoSo> Hosos { get; set; }
         public DbSet<DatLich> DatLichs { get; set; }
         public DbSet<PhongKham> PhongKhams { get; set; }
+        public DbSet<DanToc> DanTocs { get; set; }
+        public DbSet<NgheNghiep> NgheNghieps { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +33,20 @@ namespace HospitalManagement.Data
                 .WithOne(dl => dl.PhongKham)
                 .HasForeignKey<DatLich>(dl => dl.IdPhong)
                 .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa PhongKham
+
+            //1..1 giữa DanToc và DatLich
+            modelBuilder.Entity<DanToc>()
+                .HasOne(dl => dl.DatLich)
+                .WithOne(dt => dt.DanToc)
+                .HasForeignKey<DatLich>(dl => dl.IdDanToc)
+                .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
+
+            //1..1 giữa NgheNghiep và DatLich
+            modelBuilder.Entity<PhongKham>()
+                .HasOne(pk => pk.DatLich)
+                .WithOne(dl => dl.PhongKham)
+                .HasForeignKey<DatLich>(dl => dl.IdNgheNghiep)
+                .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
 
             base.OnModelCreating(modelBuilder);
         }

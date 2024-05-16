@@ -10,6 +10,8 @@ namespace HospitalManagement.Helpers
             CreateMap<HoSo, HoSoModel>().ReverseMap();
             CreateMap<DatLich, DatLichModel>().ReverseMap();
             CreateMap<PhongKham, PhongKhamModel>().ReverseMap();
+            CreateMap<DanToc, DanTocModel>().ReverseMap();
+            CreateMap<NgheNghiep, NgheNghiepModel>().ReverseMap();
         }
     }
 }

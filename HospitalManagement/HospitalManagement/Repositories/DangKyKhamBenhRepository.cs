@@ -114,8 +114,8 @@ namespace HospitalManagement.Repositories
                 IdPhong = dangKyModel.IdPhong,
                 NgayTao = DateTime.Now, // Gán ngày tạo mới cho ngày tạo
                 QuocTich = dangKyModel.QuocTich,
-                DanToc = dangKyModel.DanToc,
-                NgheNghiep = dangKyModel.NgheNghiep,
+                IdDanToc = dangKyModel.IdDanToc,
+                IdNgheNghiep = dangKyModel.IdNgheNghiep,
                 GioKham = dangKyModel.GioKham,
 
                 // Gán MaHoSo từ existingHoSo
