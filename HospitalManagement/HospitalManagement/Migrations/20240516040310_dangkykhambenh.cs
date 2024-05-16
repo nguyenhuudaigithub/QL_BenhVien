@@ -6,11 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospitalManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class CompleteDiaChi : Migration
+    public partial class dangkykhambenh : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "DanToc",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", maxLength: 11, nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenDanToc = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DanToc", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "HoSo",
                 columns: table => new
@@ -33,6 +46,19 @@ namespace HospitalManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NgheNghiep",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", maxLength: 11, nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenNgheNghiep = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NgheNghiep", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PhongPham",
                 columns: table => new
                 {
@@ -47,6 +73,20 @@ namespace HospitalManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuocTich",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", maxLength: 11, nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenQuocTich = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenVietTat = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuocTich", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DatLich",
                 columns: table => new
                 {
@@ -57,8 +97,8 @@ namespace HospitalManagement.Migrations
                     IdPhong = table.Column<int>(type: "int", maxLength: 11, nullable: false),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QuocTich = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    DanToc = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NgheNghiep = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    IdDanToc = table.Column<int>(type: "int", maxLength: 11, nullable: true),
+                    IdNgheNghiep = table.Column<int>(type: "int", maxLength: 11, nullable: true),
                     GioKham = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     MaHoSo = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
@@ -66,24 +106,43 @@ namespace HospitalManagement.Migrations
                 {
                     table.PrimaryKey("PK_DatLich", x => x.id);
                     table.ForeignKey(
+                        name: "FK_DatLich_DanToc_IdDanToc",
+                        column: x => x.IdDanToc,
+                        principalTable: "DanToc",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_DatLich_HoSo_MaHoSo",
                         column: x => x.MaHoSo,
                         principalTable: "HoSo",
                         principalColumn: "MaHoSo",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DatLich_PhongPham_IdPhong",
-                        column: x => x.IdPhong,
+                        name: "FK_DatLich_NgheNghiep_IdNgheNghiep",
+                        column: x => x.IdNgheNghiep,
+                        principalTable: "NgheNghiep",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_DatLich_PhongPham_IdNgheNghiep",
+                        column: x => x.IdNgheNghiep,
                         principalTable: "PhongPham",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DatLich_IdPhong",
+                name: "IX_DatLich_IdDanToc",
                 table: "DatLich",
-                column: "IdPhong",
-                unique: true);
+                column: "IdDanToc",
+                unique: true,
+                filter: "[IdDanToc] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DatLich_IdNgheNghiep",
+                table: "DatLich",
+                column: "IdNgheNghiep",
+                unique: true,
+                filter: "[IdNgheNghiep] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DatLich_MaHoSo",
@@ -98,7 +157,16 @@ namespace HospitalManagement.Migrations
                 name: "DatLich");
 
             migrationBuilder.DropTable(
+                name: "QuocTich");
+
+            migrationBuilder.DropTable(
+                name: "DanToc");
+
+            migrationBuilder.DropTable(
                 name: "HoSo");
+
+            migrationBuilder.DropTable(
+                name: "NgheNghiep");
 
             migrationBuilder.DropTable(
                 name: "PhongPham");

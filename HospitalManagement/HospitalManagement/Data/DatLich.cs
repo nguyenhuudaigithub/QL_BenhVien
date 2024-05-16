@@ -19,29 +19,19 @@ namespace HospitalManagement.Data
 
         [Required]
         public DateTime NgayTao { get; set; }
-
-        //Có thể nhập trống
-        [MaxLength(60)]
-        public string? QuocTich { get; set; }
-
-        [ForeignKey("DanToc")]
-        [MaxLength(11)]
-        public int? IdDanToc { get; set; }
-
-        [ForeignKey("NgheNghiep")]
-        [MaxLength(11)]
-        public int? IdNgheNghiep { get; set; }
-
+        
         [MaxLength(10)]
         public string? GioKham { get; set; }
+        public string? MoTa { get; set; }
+        public string? ChiTietChuanDoan { get; set; }
+        public string? LoiDan { get; set; }
 
         // Tham chiếu tới HoSo
+        [ForeignKey("HoSo")]
+        [Required]
         public string MaHoSo { get; set; }
-
         public HoSo HoSo { get; set; }
 
         public PhongKham PhongKham { get; set; }
-        public DanToc DanToc { get; set; }
-        public NgheNghiep NgheNghiep { get; set; }
     }
 }

@@ -15,6 +15,6 @@ namespace HospitalManagement.Data
         public string TenNgheNghiep { get; set; }
 
         //Tham chiếu tới bảng DatLich
-        public DatLich DatLich { get; set; }
+        //public DatLich DatLich { get; set; }
     }
 }

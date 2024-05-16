@@ -13,7 +13,7 @@ namespace HospitalManagement.Models
         public int IdPhong { get; set; }
 
         [Required]
-        public DateTime NgayTao { get; set; }
+        public DateTime NgayTao { get; set; }   
 
         [MaxLength(60)]
         public string QuocTich { get; set; }
@@ -25,10 +25,9 @@ namespace HospitalManagement.Models
         public string NgheNghiep { get; set; }
 
         [MaxLength(10)]
-        public string GioKham { get; set; }
-
-        //public string MaHoSo { get; set; }
-        //public HoSoModel HoSo { get; set; }
-        //public PhongKhamModel PhongKham { get; set; }
+        public string? GioKham { get; set; }
+        public string? MoTa { get; set; }
+        public string? ChiTietChuanDoan { get; set; }
+        public string? LoiDan { get; set; }
     }
 }

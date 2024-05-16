@@ -7,7 +7,7 @@ namespace HospitalManagement.Models
         public int id { get; set; }
         [Required]
         public string TenPhongKham { get; set; }
-        //public DatLichModel DatLich { get; set; }
+
         public int SoLuongToiDa { get; set; }
 
     }

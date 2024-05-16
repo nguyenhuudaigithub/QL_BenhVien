@@ -13,8 +13,6 @@ namespace HospitalManagement.Data
 
         [Required]
         public string TenDanToc { get; set; }
-
-        //Tham chiếu tới bảng DatLich
-        public DatLich DatLich { get; set; }
+        //public DatLich DatLich { get; set; }
     }
 }

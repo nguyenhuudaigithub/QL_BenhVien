@@ -44,11 +44,11 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost("/huyen")]
-        public async Task<IActionResult> GetHuyenModelListAsync([FromBody] string idTinh)
+        public async Task<IActionResult> GetHuyenModelListAsync([FromBody] TinhParam tinhParam)
         {
             try
             {
-                var huyenList = await _hoSoRepo.GetHuyenModelListAsync(idTinh);
+                var huyenList = await _hoSoRepo.GetHuyenModelListAsync(tinhParam.IdTinh);
                 return huyenList == null ? NotFound() : Ok(huyenList);
             }
             catch
@@ -58,11 +58,11 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost("/phuong")]
-        public async Task<IActionResult> GetPhuongModelListAsync([FromBody] string idHuyen)
+        public async Task<IActionResult> GetPhuongModelListAsync([FromBody] HuyenParam huyenParam)
         {
             try
             {
-                var phuongList = await _hoSoRepo.GetPhuongModelListAsync(idHuyen);
+                var phuongList = await _hoSoRepo.GetPhuongModelListAsync(huyenParam.IdHuyen);
                 return phuongList == null ? NotFound() : Ok(phuongList);
             }
             catch
@@ -72,11 +72,11 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost("/diachi")]
-        public async Task<IActionResult> GetChiTietDiaChiModelAsync([FromBody] string idPhuong)
+        public async Task<IActionResult> GetChiTietDiaChiModelAsync([FromBody] PhuongParam phuongParam)
         {
             try
             {
-                var chiTietDiaChi = await _hoSoRepo.GetChiTietDiaChiModelAsync(idPhuong);
+                var chiTietDiaChi = await _hoSoRepo.GetChiTietDiaChiModelAsync(phuongParam.IdPhuong);
                 return chiTietDiaChi == null ? NotFound() : Ok(chiTietDiaChi);
             }
             catch

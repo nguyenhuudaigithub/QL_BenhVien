@@ -2,6 +2,7 @@
 using HospitalManagement.Data;
 using HospitalManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace HospitalManagement.Repositories
 {
@@ -25,7 +26,7 @@ namespace HospitalManagement.Repositories
 
             if (checkNumberExisting != null)
             {
-                return 0;
+                throw new Exception("Số điện thoại đã tồn tại.");
             }
 
             if (existingHoSo == null)
@@ -70,10 +71,11 @@ namespace HospitalManagement.Repositories
                     NgaySinh = dangKyModel.NgaySinh,
                     Email = dangKyModel.Email,
                     GioiTinh = dangKyModel.GioiTinh,
-                    //IdTinh = dangKyModel.IdTinh,
-                    //IdHuyen = dangKyModel.IdHuyen,
+                    IdDanToc = dangKyModel.IdDanToc,
+                    IdNgheNghiep = dangKyModel.IdNgheNghiep,
+                    IdQuocTich = dangKyModel.IdQuocTich,
                     IdPhuong = dangKyModel.IdPhuong,
-                    SoNha = dangKyModel.SoNha,
+                    Duong = dangKyModel.Duong,
                 };
 
 
@@ -87,6 +89,8 @@ namespace HospitalManagement.Repositories
             else if (existingHoSo.IdPhuong != dangKyModel.IdPhuong)
             {
                 existingHoSo.IdPhuong = dangKyModel.IdPhuong;
+                existingHoSo.Duong = dangKyModel.Duong;
+                _context.Hosos!.Update(existingHoSo);
                 await _context.SaveChangesAsync();
             }
 
@@ -94,16 +98,16 @@ namespace HospitalManagement.Repositories
 
             var existingPhongKham = await _context.PhongKhams.FindAsync(dangKyModel.IdPhong);
 
-            if (existingPhongKham != null)
+            if (existingPhongKham == null)
             {
-                return 0;
+                throw new Exception("Phòng khám không tồn tại.");
             }
 
             var slBenhNhanPhong = await _context.DatLichs.Where(b => b.NgayKham == dangKyModel.NgayKham && b.IdPhong == dangKyModel.IdPhong).ToListAsync();
 
             if (slBenhNhanPhong.Count >= existingPhongKham.SoLuongToiDa)
             {
-                return 0;
+                throw new Exception("Số lượng bệnh nhân của phòng khám đã đầy.");
             }
 
             var datLichNew = new DatLich
@@ -113,13 +117,10 @@ namespace HospitalManagement.Repositories
                 NgayKham = dangKyModel.NgayKham,
                 IdPhong = dangKyModel.IdPhong,
                 NgayTao = DateTime.Now, // Gán ngày tạo mới cho ngày tạo
-                QuocTich = dangKyModel.QuocTich,
-                IdDanToc = dangKyModel.IdDanToc,
-                IdNgheNghiep = dangKyModel.IdNgheNghiep,
                 GioKham = dangKyModel.GioKham,
-
+                
                 // Gán MaHoSo từ existingHoSo
-                MaHoSo = existingHoSo.MaHoSo
+                MaHoSo = convertHoSoModel.MaHoSo
             };
 
             //var datLichNew = _mapper.Map<DatLich>(dangKyModel);

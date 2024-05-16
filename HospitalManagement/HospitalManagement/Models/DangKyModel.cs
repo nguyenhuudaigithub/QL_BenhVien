@@ -17,10 +17,9 @@
 
         public string Email { get; set; }
         public bool GioiTinh { get; set; }
-        //public int IdTinh { get; set; }
-        //public int IdHuyen { get; set; }
+
         public string IdPhuong { get; set; }
-        public string SoNha { get; set; }
+        public string Duong { get; set; }
 
         public DateTime? NgayTaoHoSo { get; set; }
 
@@ -30,9 +29,9 @@
 
         public DateTime NgayTao { get; set; }
 
-        public string? QuocTich { get; set; }
-        public int? IdDanToc { get; set; }
-        public int? IdNgheNghiep { get; set; }
+        public int IdQuocTich { get; set; }
+        public int IdDanToc { get; set; }
+        public int IdNgheNghiep { get; set; }
         public string? GioKham { get; set; }
 
     }

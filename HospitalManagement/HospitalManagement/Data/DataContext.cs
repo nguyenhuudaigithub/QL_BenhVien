@@ -36,18 +36,18 @@ namespace HospitalManagement.Data
                 .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa PhongKham
 
             //1..1 giữa DanToc và DatLich
-            modelBuilder.Entity<DanToc>()
-                .HasOne(dl => dl.DatLich)
-                .WithOne(dt => dt.DanToc)
-                .HasForeignKey<DatLich>(dl => dl.IdDanToc)
-                .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
+            //modelBuilder.Entity<DanToc>()
+            //    .HasOne(dl => dl.DatLich)
+            //    .WithOne(dt => dt.DanToc)
+            //    .HasForeignKey<DatLich>(dl => dl.IdDanToc)
+            //    .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
 
             //1..1 giữa NgheNghiep và DatLich
-            modelBuilder.Entity<PhongKham>()
-                .HasOne(pk => pk.DatLich)
-                .WithOne(dl => dl.PhongKham)
-                .HasForeignKey<DatLich>(dl => dl.IdNgheNghiep)
-                .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
+            //modelBuilder.Entity<PhongKham>()
+            //    .HasOne(pk => pk.DatLich)
+            //    .WithOne(dl => dl.PhongKham)
+            //    .HasForeignKey<DatLich>(dl => dl.IdNgheNghiep)
+            //    .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
 
             base.OnModelCreating(modelBuilder);
         }

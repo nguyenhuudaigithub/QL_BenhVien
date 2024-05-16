@@ -35,21 +35,26 @@ namespace HospitalManagement.Data
         [Required]
         public bool GioiTinh { get; set; }
 
-        //Address
-        //[Required]
-        //[MaxLength(5)]
-        //public int IdTinh { get; set; }
-        //[Required]
-        //[MaxLength(5)]
-        //public int IdHuyen { get; set; }
         [Required]
         [MaxLength(5)]
         public string IdPhuong { get; set; }
         [Required]
         [MaxLength(255)]
-        public string SoNha { get; set; }
+        public string Duong { get; set; }
 
         public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
+
+        [ForeignKey("QuocTich")]
+        public int IdQuocTich { get; set; }
+        public QuocTich QuocTich { get; set; }
+
+        [ForeignKey("NgheNghiep")]
+        public int IdNgheNghiep { get; set; }
+        public NgheNghiep NgheNghiep { get; set; }
+
+        [ForeignKey("DanToc")]
+        public int IdDanToc { get; set; }
+        public DanToc DanToc { get; set; }
 
         public ICollection<DatLich> DatLichs { get; set; }
     }

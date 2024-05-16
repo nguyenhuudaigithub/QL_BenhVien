@@ -17,6 +17,6 @@ namespace HospitalManagement.Data
 
         //Tham chiếu tới bảng DatLich
         public DatLich DatLich { get; set; }
-        
+
     }
 }

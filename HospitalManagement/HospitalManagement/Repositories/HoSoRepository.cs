@@ -23,12 +23,31 @@ namespace HospitalManagement.Repositories
 
         public async Task<HoSoModel> GetHoSoModelAsync(FetchHoSoModel fetchHoSoModel)
         {
-            var HoSo = await _context.Hosos!.SingleOrDefaultAsync(b => b.Ten == fetchHoSoModel.Ten && b.SDT == fetchHoSoModel.SDT);
+            var HoSo = await _context.Hosos!.SingleOrDefaultAsync(b => (b.Ten == fetchHoSoModel.Ten && b.SDT == fetchHoSoModel.SDT) || b.MaHoSo == fetchHoSoModel.MaHoSo);
             if (HoSo != null)
             {
                 ChiTietDiaChiModel chiTietDiaChiModel = await GetChiTietDiaChiModelAsync(HoSo.IdPhuong);
 
                 HoSoModel hoSoModel = _mapper.Map<HoSoModel>(HoSo);
+
+                var danToc = await _context.DanTocs!.SingleOrDefaultAsync(b => b.id == HoSo.IdDanToc);
+                var ngheNghiep = await _context.NgheNghieps!.SingleOrDefaultAsync(b => b.id == HoSo.IdNgheNghiep);
+                var quocTich = await _context.QuocTichs!.SingleOrDefaultAsync(b => b.id == HoSo.IdQuocTich);
+                if (danToc != null)
+                {
+                hoSoModel.TenDanToc = danToc.TenDanToc;
+
+                }
+                if (ngheNghiep != null)
+                {
+                hoSoModel.TenNgheNghiep = ngheNghiep.TenNgheNghiep;
+
+                }
+                if (quocTich != null)
+                {
+
+                hoSoModel.TenQuocTich = quocTich.TenQuocTich;
+                }
 
                 if (chiTietDiaChiModel != null)
                 {

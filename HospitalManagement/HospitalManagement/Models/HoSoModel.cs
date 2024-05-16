@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HospitalManagement.Data;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalManagement.Models
 {
@@ -31,14 +33,6 @@ namespace HospitalManagement.Models
         [Required]
         public bool GioiTinh { get; set; }
 
-        //[Required]
-        //[MaxLength(5)]
-        //public int IdTinh { get; set; }
-
-        //[Required]
-        //[MaxLength(5)]
-        //public int IdHuyen { get; set; }
-
         [Required]
         [MaxLength(5)]
         public string IdPhuong { get; set; }
@@ -52,8 +46,19 @@ namespace HospitalManagement.Models
 
         [Required]
         [MaxLength(255)]
-        public string SoNha { get; set; }
+        public string Duong { get; set; }
 
-        //public ICollection<DatLichModel> DatLichs { get; set; }
+        public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
+
+        public int IdDanToc { get; set; }
+        public string TenDanToc { get; set; }
+
+        public int IdQuocTich { get; set; }
+        public string TenQuocTich { get; set; }
+
+        public int IdNgheNghiep { get; set; }
+        public string TenNgheNghiep { get; set; }
+
+
     }
 }
