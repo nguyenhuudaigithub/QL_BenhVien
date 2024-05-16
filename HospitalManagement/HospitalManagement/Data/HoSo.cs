@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalManagement.Data
 {
@@ -36,15 +36,15 @@ namespace HospitalManagement.Data
         public bool GioiTinh { get; set; }
 
         //Address
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdTinh { get; set; }
+        //[Required]
+        //[MaxLength(5)]
+        //public int IdHuyen { get; set; }
         [Required]
         [MaxLength(5)]
-        public int IdTinh { get; set; }
-        [Required]
-        [MaxLength(5)]
-        public int IdHuyen { get; set; }
-        [Required]
-        [MaxLength(5)]
-        public int IdXa { get; set; }
+        public string IdPhuong { get; set; }
         [Required]
         [MaxLength(255)]
         public string SoNha { get; set; }

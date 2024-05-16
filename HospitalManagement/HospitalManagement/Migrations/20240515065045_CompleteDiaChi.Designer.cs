@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240425031738_init")]
-    partial class init
+    [Migration("20240515065045_CompleteDiaChi")]
+    partial class CompleteDiaChi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,9 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<int>("STT")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
                     b.HasIndex("IdPhong")
@@ -97,19 +100,15 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int>("IdHuyen")
+                    b.Property<string>("IdPhuong")
+                        .IsRequired()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdTinh")
-                        .HasMaxLength(5)
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdXa")
-                        .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<DateTime>("NgaySinh")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTaoHoSo")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SDT")
@@ -140,6 +139,9 @@ namespace HospitalManagement.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("SoLuongToiDa")
+                        .HasColumnType("int");
 
                     b.Property<string>("TenPhongKham")
                         .IsRequired()

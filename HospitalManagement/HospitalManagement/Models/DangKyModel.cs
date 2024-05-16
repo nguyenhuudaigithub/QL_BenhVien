@@ -1,14 +1,10 @@
-﻿using HospitalManagement.Data;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace HospitalManagement.Models
+﻿namespace HospitalManagement.Models
 {
-   
-        public class DangKyModel
-        {
+
+    public class DangKyModel
+    {
         public string MaHoSo { get; set; }
-   
+
         public string CCCD { get; set; }
 
         public string HoDem { get; set; }
@@ -21,9 +17,9 @@ namespace HospitalManagement.Models
 
         public string Email { get; set; }
         public bool GioiTinh { get; set; }
-        public int IdTinh { get; set; }
-        public int IdHuyen { get; set; }
-        public int IdXa { get; set; }
+        //public int IdTinh { get; set; }
+        //public int IdHuyen { get; set; }
+        public string IdPhuong { get; set; }
         public string SoNha { get; set; }
 
         public DateTime? NgayTaoHoSo { get; set; }
@@ -41,6 +37,6 @@ namespace HospitalManagement.Models
 
     }
 
-        
+
 
 }

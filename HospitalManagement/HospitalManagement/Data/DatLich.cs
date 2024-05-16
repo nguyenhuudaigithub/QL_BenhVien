@@ -9,7 +9,7 @@ namespace HospitalManagement.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-
+        public int STT { get; set; }
         [Required]
         public DateTime NgayKham { get; set; }
 

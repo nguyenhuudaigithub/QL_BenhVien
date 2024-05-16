@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using HospitalManagement.Data;
 using HospitalManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Repositories
 {
@@ -30,7 +30,7 @@ namespace HospitalManagement.Repositories
 
             if (existingHoSo == null)
             {
-                
+
                 DateTime now = DateTime.Now;
                 int year = now.Year;
                 int month = now.Month;
@@ -70,9 +70,9 @@ namespace HospitalManagement.Repositories
                     NgaySinh = dangKyModel.NgaySinh,
                     Email = dangKyModel.Email,
                     GioiTinh = dangKyModel.GioiTinh,
-                    IdTinh = dangKyModel.IdTinh,
-                    IdHuyen = dangKyModel.IdHuyen,
-                    IdXa = dangKyModel.IdXa,
+                    //IdTinh = dangKyModel.IdTinh,
+                    //IdHuyen = dangKyModel.IdHuyen,
+                    IdPhuong = dangKyModel.IdPhuong,
                     SoNha = dangKyModel.SoNha,
                 };
 
@@ -83,9 +83,14 @@ namespace HospitalManagement.Repositories
                 await _context.SaveChangesAsync();
 
                 existingHoSo = await _context.Hosos.FindAsync(maHoSoMoi);
-            } 
+            }
+            else if (existingHoSo.IdPhuong != dangKyModel.IdPhuong)
+            {
+                existingHoSo.IdPhuong = dangKyModel.IdPhuong;
+                await _context.SaveChangesAsync();
+            }
 
-            var convertHoSoModel =  _mapper.Map<HoSoModel>(existingHoSo);
+            var convertHoSoModel = _mapper.Map<HoSoModel>(existingHoSo);
 
             var existingPhongKham = await _context.PhongKhams.FindAsync(dangKyModel.IdPhong);
 
@@ -94,9 +99,17 @@ namespace HospitalManagement.Repositories
                 return 0;
             }
 
+            var slBenhNhanPhong = await _context.DatLichs.Where(b => b.NgayKham == dangKyModel.NgayKham && b.IdPhong == dangKyModel.IdPhong).ToListAsync();
+
+            if (slBenhNhanPhong.Count >= existingPhongKham.SoLuongToiDa)
+            {
+                return 0;
+            }
+
             var datLichNew = new DatLich
             {
                 // Gán các giá trị từ dangKyModel cho datLichNew
+                STT = slBenhNhanPhong.Count + 1,
                 NgayKham = dangKyModel.NgayKham,
                 IdPhong = dangKyModel.IdPhong,
                 NgayTao = DateTime.Now, // Gán ngày tạo mới cho ngày tạo
