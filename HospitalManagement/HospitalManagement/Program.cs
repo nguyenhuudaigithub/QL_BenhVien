@@ -28,6 +28,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IPhongKhamRepository, PhongKhamRepository>();
 builder.Services.AddScoped<IDangKyKhamBenhRepository, DangKyKhamBenhRepository>();
 builder.Services.AddScoped<IHoSoRepository, HoSoRepository>();
+builder.Services.AddScoped<IQuocTichRepository, QuocTichRepository>();
 
 var app = builder.Build();
 
