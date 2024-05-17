@@ -45,15 +45,15 @@ namespace HospitalManagement.Data
         public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
 
         [ForeignKey("QuocTich")]
-        public int IdQuocTich { get; set; }
+        public int? IdQuocTich { get; set; }
         public QuocTich QuocTich { get; set; }
 
         [ForeignKey("NgheNghiep")]
-        public int IdNgheNghiep { get; set; }
+        public int? IdNgheNghiep { get; set; }
         public NgheNghiep NgheNghiep { get; set; }
 
         [ForeignKey("DanToc")]
-        public int IdDanToc { get; set; }
+        public int? IdDanToc { get; set; }
         public DanToc DanToc { get; set; }
 
         public ICollection<DatLich> DatLichs { get; set; }

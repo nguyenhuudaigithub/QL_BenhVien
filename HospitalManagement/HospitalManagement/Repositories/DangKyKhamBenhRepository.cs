@@ -19,19 +19,16 @@ namespace HospitalManagement.Repositories
 
         public async Task<int> AddDangKyAsync(DangKyModel dangKyModel)
         {
-
             var existingHoSo = await _context.Hosos.FindAsync(dangKyModel.MaHoSo);
-
-            var checkNumberExisting = await _context.Hosos!.SingleOrDefaultAsync(b => b.SDT == dangKyModel.SDT);
-
-            if (checkNumberExisting != null)
-            {
-                throw new Exception("Số điện thoại đã tồn tại.");
-            }
 
             if (existingHoSo == null)
             {
+                var checkNumberExisting = await _context.Hosos!.SingleOrDefaultAsync(b => b.SDT == dangKyModel.SDT);
 
+                if (checkNumberExisting != null)
+                {
+                    throw new Exception("Số điện thoại đã tồn tại.");
+                }
                 DateTime now = DateTime.Now;
                 int year = now.Year;
                 int month = now.Month;
@@ -110,6 +107,12 @@ namespace HospitalManagement.Repositories
                 throw new Exception("Số lượng bệnh nhân của phòng khám đã đầy.");
             }
 
+            var checkDatLich = await _context.DatLichs.Where(b => b.MaHoSo == dangKyModel.MaHoSo && b.GioKham == dangKyModel.GioKham && b.IdPhong == b.IdPhong && b.NgayKham == dangKyModel.NgayKham).ToListAsync();
+            if (checkDatLich.Count >= 1)
+            {
+                throw new Exception("Bệnh nhân này đã đăng ký khám vào thời gian này.");
+            }
+
             var datLichNew = new DatLich
             {
                 // Gán các giá trị từ dangKyModel cho datLichNew
@@ -123,13 +126,14 @@ namespace HospitalManagement.Repositories
                 MaHoSo = convertHoSoModel.MaHoSo
             };
 
+
             //var datLichNew = _mapper.Map<DatLich>(dangKyModel);
             //datLichNew.MaHoSo = convertHoSoModel.MaHoSo;
 
-            await _context.DatLichs!.AddAsync(datLichNew);
+            var datLichNewDB = await _context.DatLichs!.AddAsync(datLichNew);
             await _context.SaveChangesAsync();
 
-            return datLichNew.id;
+            return 1;
         }
     }
 }

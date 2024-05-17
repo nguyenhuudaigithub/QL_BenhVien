@@ -29,10 +29,10 @@
 
         public DateTime NgayTao { get; set; }
 
-        public int IdQuocTich { get; set; }
-        public int IdDanToc { get; set; }
-        public int IdNgheNghiep { get; set; }
-        public string? GioKham { get; set; }
+        public int? IdQuocTich { get; set; } = null;
+        public int? IdDanToc { get; set; } = null;
+        public int? IdNgheNghiep { get; set; } = null;
+        public string? GioKham { get; set; } = "";
 
     }
 

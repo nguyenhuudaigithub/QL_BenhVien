@@ -29,11 +29,16 @@ namespace HospitalManagement.Data
 
 
             //1..1 giữa PhongKham và DatLich
+            //modelBuilder.Entity<PhongKham>()
+            //    .HasOne(pk => pk.DatLich)
+            //    .WithOne(dl => dl.PhongKham)
+            //    .HasForeignKey<DatLich>(dl => dl.IdPhong)
+            //    .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa PhongKham
+
             modelBuilder.Entity<PhongKham>()
-                .HasOne(pk => pk.DatLich)
+                .HasMany(pk => pk.DatLichs)
                 .WithOne(dl => dl.PhongKham)
-                .HasForeignKey<DatLich>(dl => dl.IdPhong)
-                .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa PhongKham
+                .HasForeignKey(dl => dl.IdPhong);
 
             //1..1 giữa DanToc và DatLich
             //modelBuilder.Entity<DanToc>()

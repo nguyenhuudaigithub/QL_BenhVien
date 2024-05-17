@@ -44,6 +44,7 @@ namespace HospitalManagement.Migrations
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
@@ -80,8 +81,7 @@ namespace HospitalManagement.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("IdPhong")
-                        .IsUnique();
+                    b.HasIndex("IdPhong");
 
                     b.HasIndex("MaHoSo");
 
@@ -117,10 +117,10 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int>("IdDanToc")
+                    b.Property<int?>("IdDanToc")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdNgheNghiep")
+                    b.Property<int?>("IdNgheNghiep")
                         .HasColumnType("int");
 
                     b.Property<string>("IdPhuong")
@@ -128,7 +128,7 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
-                    b.Property<int>("IdQuocTich")
+                    b.Property<int?>("IdQuocTich")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgaySinh")
@@ -222,9 +222,9 @@ namespace HospitalManagement.Migrations
             modelBuilder.Entity("HospitalManagement.Data.DatLich", b =>
                 {
                     b.HasOne("HospitalManagement.Data.PhongKham", "PhongKham")
-                        .WithOne("DatLich")
-                        .HasForeignKey("HospitalManagement.Data.DatLich", "IdPhong")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany("DatLichs")
+                        .HasForeignKey("IdPhong")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HospitalManagement.Data.HoSo", "HoSo")
@@ -242,21 +242,15 @@ namespace HospitalManagement.Migrations
                 {
                     b.HasOne("HospitalManagement.Data.DanToc", "DanToc")
                         .WithMany()
-                        .HasForeignKey("IdDanToc")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdDanToc");
 
                     b.HasOne("HospitalManagement.Data.NgheNghiep", "NgheNghiep")
                         .WithMany()
-                        .HasForeignKey("IdNgheNghiep")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNgheNghiep");
 
                     b.HasOne("HospitalManagement.Data.QuocTich", "QuocTich")
                         .WithMany()
-                        .HasForeignKey("IdQuocTich")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdQuocTich");
 
                     b.Navigation("DanToc");
 
@@ -272,8 +266,7 @@ namespace HospitalManagement.Migrations
 
             modelBuilder.Entity("HospitalManagement.Data.PhongKham", b =>
                 {
-                    b.Navigation("DatLich")
-                        .IsRequired();
+                    b.Navigation("DatLichs");
                 });
 #pragma warning restore 612, 618
         }

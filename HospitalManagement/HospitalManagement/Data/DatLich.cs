@@ -8,6 +8,7 @@ namespace HospitalManagement.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [MaxLength(100)]
         public int id { get; set; }
         public int STT { get; set; }
         [Required]

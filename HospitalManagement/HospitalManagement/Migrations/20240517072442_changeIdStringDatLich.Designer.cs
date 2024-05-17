@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240516040310_dangkykhambenh")]
-    partial class dangkykhambenh
+    [Migration("20240517072442_changeIdStringDatLich")]
+    partial class changeIdStringDatLich
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,29 +47,31 @@ namespace HospitalManagement.Migrations
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("ChiTietChuanDoan")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GioKham")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int?>("IdDanToc")
-                        .HasMaxLength(11)
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdNgheNghiep")
-                        .HasMaxLength(11)
-                        .HasColumnType("int");
-
                     b.Property<int>("IdPhong")
                         .HasMaxLength(11)
                         .HasColumnType("int");
 
+                    b.Property<string>("LoiDan")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MaHoSo")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayKham")
                         .HasColumnType("datetime2");
@@ -77,22 +79,12 @@ namespace HospitalManagement.Migrations
                     b.Property<DateTime>("NgayTao")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("QuocTich")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<int>("STT")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("IdDanToc")
-                        .IsUnique()
-                        .HasFilter("[IdDanToc] IS NOT NULL");
-
-                    b.HasIndex("IdNgheNghiep")
-                        .IsUnique()
-                        .HasFilter("[IdNgheNghiep] IS NOT NULL");
+                    b.HasIndex("IdPhong");
 
                     b.HasIndex("MaHoSo");
 
@@ -110,6 +102,11 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
+                    b.Property<string>("Duong")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -123,10 +120,19 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<int>("IdDanToc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdNgheNghiep")
+                        .HasColumnType("int");
+
                     b.Property<string>("IdPhuong")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
+
+                    b.Property<int>("IdQuocTich")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("NgaySinh")
                         .HasColumnType("datetime2");
@@ -139,17 +145,18 @@ namespace HospitalManagement.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<string>("SoNha")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("Ten")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("MaHoSo");
+
+                    b.HasIndex("IdDanToc");
+
+                    b.HasIndex("IdNgheNghiep");
+
+                    b.HasIndex("IdQuocTich");
 
                     b.ToTable("HoSo");
                 });
@@ -217,19 +224,11 @@ namespace HospitalManagement.Migrations
 
             modelBuilder.Entity("HospitalManagement.Data.DatLich", b =>
                 {
-                    b.HasOne("HospitalManagement.Data.DanToc", "DanToc")
-                        .WithOne("DatLich")
-                        .HasForeignKey("HospitalManagement.Data.DatLich", "IdDanToc")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("HospitalManagement.Data.NgheNghiep", "NgheNghiep")
-                        .WithOne("DatLich")
-                        .HasForeignKey("HospitalManagement.Data.DatLich", "IdNgheNghiep");
-
                     b.HasOne("HospitalManagement.Data.PhongKham", "PhongKham")
-                        .WithOne("DatLich")
-                        .HasForeignKey("HospitalManagement.Data.DatLich", "IdNgheNghiep")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("DatLichs")
+                        .HasForeignKey("IdPhong")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HospitalManagement.Data.HoSo", "HoSo")
                         .WithMany("DatLichs")
@@ -237,19 +236,36 @@ namespace HospitalManagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DanToc");
-
                     b.Navigation("HoSo");
-
-                    b.Navigation("NgheNghiep");
 
                     b.Navigation("PhongKham");
                 });
 
-            modelBuilder.Entity("HospitalManagement.Data.DanToc", b =>
+            modelBuilder.Entity("HospitalManagement.Data.HoSo", b =>
                 {
-                    b.Navigation("DatLich")
+                    b.HasOne("HospitalManagement.Data.DanToc", "DanToc")
+                        .WithMany()
+                        .HasForeignKey("IdDanToc")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("HospitalManagement.Data.NgheNghiep", "NgheNghiep")
+                        .WithMany()
+                        .HasForeignKey("IdNgheNghiep")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalManagement.Data.QuocTich", "QuocTich")
+                        .WithMany()
+                        .HasForeignKey("IdQuocTich")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DanToc");
+
+                    b.Navigation("NgheNghiep");
+
+                    b.Navigation("QuocTich");
                 });
 
             modelBuilder.Entity("HospitalManagement.Data.HoSo", b =>
@@ -257,16 +273,9 @@ namespace HospitalManagement.Migrations
                     b.Navigation("DatLichs");
                 });
 
-            modelBuilder.Entity("HospitalManagement.Data.NgheNghiep", b =>
-                {
-                    b.Navigation("DatLich")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalManagement.Data.PhongKham", b =>
                 {
-                    b.Navigation("DatLich")
-                        .IsRequired();
+                    b.Navigation("DatLichs");
                 });
 #pragma warning restore 612, 618
         }
