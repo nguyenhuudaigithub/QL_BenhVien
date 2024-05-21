@@ -5,15 +5,16 @@ namespace HospitalManagement.Models
     public class DatLichModel
     {
         [Required]
+
+        public int id { get; set; }
         public DateTime NgayKham { get; set; }
         public int STT { get; set; }
 
+     //   [Required, MaxLength(11)]
+     //   public int IdPhong { get; set; }
+        
         [Required]
-        [MaxLength(11)]
-        public int IdPhong { get; set; }
-
-        [Required]
-        public DateTime NgayTao { get; set; }   
+        public DateTime NgayTao { get; set; }
 
         [MaxLength(60)]
         public string QuocTich { get; set; }

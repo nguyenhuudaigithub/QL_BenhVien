@@ -32,6 +32,7 @@ builder.Services.AddScoped<IHoSoRepository, HoSoRepository>();
 builder.Services.AddScoped<IQuocTichRepository, QuocTichRepository>();
 builder.Services.AddScoped<INgheNghiepRepository, NgheNghiepRepository>();
 builder.Services.AddScoped<IDanTocRepository, DanTocRepository>();
+builder.Services.AddScoped<IDatLichRepository, DatLichRepository>();
 
 var app = builder.Build();
 
