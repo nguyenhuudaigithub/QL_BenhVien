@@ -13,6 +13,7 @@ namespace HospitalManagement.Helpers
             CreateMap<QuocTich, QuocTichModel>().ReverseMap();
             CreateMap<DanToc, DanTocModel>().ReverseMap();
             CreateMap<NgheNghiep, NgheNghiepModel>().ReverseMap();
+            CreateMap<Thuoc, ThuocModel>().ReverseMap();
         }
     }
 }

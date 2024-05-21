@@ -17,6 +17,7 @@ namespace HospitalManagement.Data
         public DbSet<QuocTich> QuocTichs { get; set; }
         public DbSet<DanToc> DanTocs { get; set; }
         public DbSet<NgheNghiep> NgheNghieps { get; set; }
+        public DbSet<Thuoc> Thuocs { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
