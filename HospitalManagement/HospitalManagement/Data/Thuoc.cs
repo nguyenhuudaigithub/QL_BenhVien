@@ -14,5 +14,6 @@ namespace HospitalManagement.Data
         public string? TenThuoc { get; set; }
         public decimal GiaTien { get; set; }
         public int SoLuongConLai { get; set; }
+        public ICollection<DonThuocChiTiet> DonThuocChiTiets { get; set; }
     }
 }

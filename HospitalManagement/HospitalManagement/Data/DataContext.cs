@@ -18,6 +18,8 @@ namespace HospitalManagement.Data
         public DbSet<DanToc> DanTocs { get; set; }
         public DbSet<NgheNghiep> NgheNghieps { get; set; }
         public DbSet<Thuoc> Thuocs { get; set; }
+        public DbSet<DonThuoc> DonThuocs {  get; set; }
+        public DbSet<DonThuocChiTiet> DonThuocChiTiets { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,6 +56,24 @@ namespace HospitalManagement.Data
             //    .WithOne(dl => dl.PhongKham)
             //    .HasForeignKey<DatLich>(dl => dl.IdNgheNghiep)
             //    .OnDelete(DeleteBehavior.Restrict);// Khi có liên kết không xóa DanToc
+
+            //Giua DatLich va DonThuoc
+            modelBuilder.Entity<DatLich>()
+            .HasOne(k => k.DonThuoc)
+            .WithOne(d => d.DatLich)
+            .HasForeignKey<DonThuoc>(d => d.idDatLich)
+            .OnDelete(DeleteBehavior.Cascade); ;
+            //Giua DonThuoc va ChiTietDonThuoc
+            modelBuilder.Entity<DonThuoc>()
+            .HasMany(d => d.DonThuocChiTiets)
+            .WithOne(dt => dt.DonThuoc)
+            .HasForeignKey(dt => dt.IdDonThuoc)
+            .OnDelete(DeleteBehavior.Cascade); ;
+            //Giua Thuoc va ChiTietDonThuoc
+            modelBuilder.Entity<Thuoc>()
+            .HasMany(t => t.DonThuocChiTiets)
+            .WithOne(dt => dt.Thuoc)
+            .HasForeignKey(dt => dt.IdThuoc);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -4,6 +4,7 @@ using HospitalManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240521081905_DonThuoc")]
+    partial class DonThuoc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,41 +107,7 @@ namespace HospitalManagement.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("idDatLich")
-                        .IsUnique()
-                        .HasFilter("[idDatLich] IS NOT NULL");
-
                     b.ToTable("DonThuoc");
-                });
-
-            modelBuilder.Entity("HospitalManagement.Data.DonThuocChiTiet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdDonThuoc")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdThuoc")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LieuDung")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDonThuoc");
-
-                    b.HasIndex("IdThuoc");
-
-                    b.ToTable("DonThuocChiTiet");
                 });
 
             modelBuilder.Entity("HospitalManagement.Data.HoSo", b =>
@@ -315,34 +284,6 @@ namespace HospitalManagement.Migrations
                     b.Navigation("PhongKham");
                 });
 
-            modelBuilder.Entity("HospitalManagement.Data.DonThuoc", b =>
-                {
-                    b.HasOne("HospitalManagement.Data.DatLich", "DatLich")
-                        .WithOne("DonThuoc")
-                        .HasForeignKey("HospitalManagement.Data.DonThuoc", "idDatLich");
-
-                    b.Navigation("DatLich");
-                });
-
-            modelBuilder.Entity("HospitalManagement.Data.DonThuocChiTiet", b =>
-                {
-                    b.HasOne("HospitalManagement.Data.DonThuoc", "DonThuoc")
-                        .WithMany("DonThuocChiTiets")
-                        .HasForeignKey("IdDonThuoc")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalManagement.Data.Thuoc", "Thuoc")
-                        .WithMany("DonThuocChiTiets")
-                        .HasForeignKey("IdThuoc")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DonThuoc");
-
-                    b.Navigation("Thuoc");
-                });
-
             modelBuilder.Entity("HospitalManagement.Data.HoSo", b =>
                 {
                     b.HasOne("HospitalManagement.Data.DanToc", "DanToc")
@@ -364,17 +305,6 @@ namespace HospitalManagement.Migrations
                     b.Navigation("QuocTich");
                 });
 
-            modelBuilder.Entity("HospitalManagement.Data.DatLich", b =>
-                {
-                    b.Navigation("DonThuoc")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HospitalManagement.Data.DonThuoc", b =>
-                {
-                    b.Navigation("DonThuocChiTiets");
-                });
-
             modelBuilder.Entity("HospitalManagement.Data.HoSo", b =>
                 {
                     b.Navigation("DatLichs");
@@ -383,11 +313,6 @@ namespace HospitalManagement.Migrations
             modelBuilder.Entity("HospitalManagement.Data.PhongKham", b =>
                 {
                     b.Navigation("DatLichs");
-                });
-
-            modelBuilder.Entity("HospitalManagement.Data.Thuoc", b =>
-                {
-                    b.Navigation("DonThuocChiTiets");
                 });
 #pragma warning restore 612, 618
         }

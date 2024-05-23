@@ -34,5 +34,6 @@ namespace HospitalManagement.Data
         public HoSo HoSo { get; set; }
 
         public PhongKham PhongKham { get; set; }
+        public DonThuoc DonThuoc { get; set; }
     }
 }
