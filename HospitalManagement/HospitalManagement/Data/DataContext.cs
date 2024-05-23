@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<NguoiDung>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -18,7 +19,7 @@ namespace HospitalManagement.Data
         public DbSet<DanToc> DanTocs { get; set; }
         public DbSet<NgheNghiep> NgheNghieps { get; set; }
         public DbSet<Thuoc> Thuocs { get; set; }
-        public DbSet<DonThuoc> DonThuocs {  get; set; }
+        public DbSet<DonThuoc> DonThuocs { get; set; }
         public DbSet<DonThuocChiTiet> DonThuocChiTiets { get; set; }
         #endregion
 
