@@ -24,6 +24,13 @@ namespace HospitalManagement.Controllers
             return datLich == null ? NotFound() : Ok(datLich);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetDatLichByEmailAndCCCD([FromBody] FetchDatLich fetchDatLich)
+        {
+            var datLich = await _datLichRepository.GetDatLichByEmailAndCCCDAsync(fetchDatLich.email, fetchDatLich.CCCD);
+            return datLich == null ? NotFound() : Ok(datLich);
+        }
+
         [Authorize(Policy = "RequireBacSi")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDatLich(int id, [FromBody] DatLichModel model)

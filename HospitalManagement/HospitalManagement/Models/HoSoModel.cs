@@ -1,6 +1,4 @@
-﻿using HospitalManagement.Data;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HospitalManagement.Models
 {
@@ -50,14 +48,14 @@ namespace HospitalManagement.Models
 
         public DateTime? NgayTaoHoSo { get; set; } = DateTime.Now;
 
-        public int IdDanToc { get; set; }
-        public string TenDanToc { get; set; }
+        public int? IdDanToc { get; set; }
+        public string? TenDanToc { get; set; }
 
-        public int IdQuocTich { get; set; }
-        public string TenQuocTich { get; set; }
+        public int? IdQuocTich { get; set; }
+        public string? TenQuocTich { get; set; }
 
-        public int IdNgheNghiep { get; set; }
-        public string TenNgheNghiep { get; set; }
+        public int? IdNgheNghiep { get; set; }
+        public string? TenNgheNghiep { get; set; }
 
 
     }
