@@ -50,10 +50,11 @@ builder.Services.AddIdentityCore<NguoiDung>(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("RequireBacSi", policy => policy.RequireRole("BacSi"));
-    options.AddPolicy("RequireDuocSi", policy => policy.RequireRole("DuocSi"));
-    options.AddPolicy("RequireYTa", policy => policy.RequireRole("YTa"));
-    options.AddPolicy("RequireBacSiOrYTa", policy => policy.RequireRole("BacSi", "YTa"));
+    options.AddPolicy("RequireBacSi", policy => policy.RequireRole("BacSi", "Admin"));
+    options.AddPolicy("RequireDuocSi", policy => policy.RequireRole("DuocSi", "Admin"));
+    options.AddPolicy("RequireBacSiChiDinh", policy => policy.RequireRole("BacSiChiDinh", "Admin"));
+    options.AddPolicy("RequireAll", policy => policy.RequireRole("BacSi", "DuocSi", "BacSiChiDinh", "Admin"));
+    options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
 });
 
 builder.Services.AddScoped<IPhongKhamRepository, PhongKhamRepository>();

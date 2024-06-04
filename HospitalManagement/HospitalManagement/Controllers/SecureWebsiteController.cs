@@ -14,27 +14,35 @@ namespace HospitalManagement.Controllers
         private readonly UserManager<NguoiDung> userManager = um;
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] NguoiDung user)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterModel user)
         {
             string message = "";
             IdentityResult result = new();
+
+            NguoiDung nguoiDung = await userManager.FindByEmailAsync(user.Email);
+
+            if (nguoiDung != null && !nguoiDung.EmailConfirmed)
+            {
+                return BadRequest("Email đã tồn tại");
+            }
+
             try
             {
-                NguoiDung nguoiDung = new NguoiDung()
+                NguoiDung nguoiDungMoi = new NguoiDung()
                 {
                     Email = user.Email,
-                    UserName = user.UserName,
+                    UserName = user.Email,
                     CCCD = user.CCCD,
                     HoDem = user.HoDem,
                     Ten = user.Ten,
-                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumber = user.SDT,
                     NgaySinh = user.NgaySinh,
                     GioiTinh = user.GioiTinh,
                     IdPhuong = user.IdPhuong,
                     Duong = user.Duong,
                 };
 
-                result = await userManager.CreateAsync(nguoiDung, user.PasswordHash);
+                result = await userManager.CreateAsync(nguoiDungMoi, user.Password);
 
                 if (!result.Succeeded)
                 {
@@ -67,7 +75,8 @@ namespace HospitalManagement.Controllers
                     nguoiDung.EmailConfirmed = true;
                 }
 
-                var result = await signInManager.PasswordSignInAsync(nguoiDung, login.Password, login.Remember, false);
+                // Kiểm tra thông tin đăng nhập
+                var result = await signInManager.PasswordSignInAsync(nguoiDung, login.Password, true, false);
 
                 if (!result.Succeeded)
                 {
@@ -104,8 +113,25 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost("addRoleToUser")]
+        //[Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddRoleToUser(string email, string role)
         {
+            string[] roleNames = { "BacSi", "BacSiChiDinh", "DuocSi", "Admin" };
+            bool checkRole = false;
+
+            foreach (var roleName in roleNames)
+            {
+                if (role == roleName)
+                {
+                    checkRole = true;
+                }
+            }
+
+            if (!checkRole)
+            {
+                return BadRequest("Quyền " + role + " không tồn tại");
+            }
+
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
@@ -119,11 +145,11 @@ namespace HospitalManagement.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return Ok("Đã thêm vai trò cho người dùng");
+            return Ok("Đã thêm quyền cho người dùng " + email);
         }
 
         [HttpGet("check-user")]
-        [Authorize(Policy = "RequireBacSi")]
+        [Authorize(Policy = "RequireAll")]
         public async Task<IActionResult> test(string email)
         {
             var user = await userManager.FindByEmailAsync(email);

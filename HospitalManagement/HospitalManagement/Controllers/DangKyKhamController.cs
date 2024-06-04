@@ -1,6 +1,5 @@
 ﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Controllers
@@ -23,12 +22,12 @@ namespace HospitalManagement.Controllers
             {
                 await _dangKyRepo.AddDangKyAsync(dangKyModel);
                 return Ok("Dang ky added successfully!");
-        }
+            }
             catch
             {
                 return BadRequest("Failed to add new dang ky.");
-    }
-}
+            }
+        }
 
     }
 }

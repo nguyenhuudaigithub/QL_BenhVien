@@ -8,7 +8,7 @@ namespace HospitalManagement.Helpers
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string[] roleNames = { "BacSi", "DuocSi", "YTa" };
+            string[] roleNames = { "BacSi", "BacSiChiDinh", "DuocSi", "Admin" };
 
             foreach (var roleName in roleNames)
             {

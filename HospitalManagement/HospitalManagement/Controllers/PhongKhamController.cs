@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using HospitalManagement.Models;
+﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Controllers
 {
@@ -37,6 +37,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddNewPhongKham(PhongKhamModel model)
         {
             try
@@ -54,6 +55,7 @@ namespace HospitalManagement.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> UpdatePhongKham(int id, [FromBody] PhongKhamModel model)
         {
             await _phongKhamRepo.UpdatePhongKhamAsync(id, model);
@@ -61,6 +63,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> DeletePhongKham([FromRoute] int id)
         {
             await _phongKhamRepo.DeletePhongKhamAsync(id);

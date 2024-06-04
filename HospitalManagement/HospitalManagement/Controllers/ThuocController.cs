@@ -1,12 +1,13 @@
 ﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace HospitalManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireDuocSi")]
     public class ThuocController : ControllerBase
     {
         private readonly IThuocRepository _thuocRepo;
