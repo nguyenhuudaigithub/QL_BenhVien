@@ -25,9 +25,9 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetDatLichByEmailAndCCCD([FromBody] FetchDatLich fetchDatLich)
+        public async Task<IActionResult> GetDatLichBySDTAndMaHoSo([FromBody] FetchDatLich fetchDatLich)
         {
-            var datLich = await _datLichRepository.GetDatLichByEmailAndCCCDAsync(fetchDatLich.email, fetchDatLich.CCCD);
+            var datLich = await _datLichRepository.GetDatLichBySDTAndMaHoSoAsync(fetchDatLich.MaHoSo, fetchDatLich.SDT);
             return datLich == null ? NotFound() : Ok(datLich);
         }
 

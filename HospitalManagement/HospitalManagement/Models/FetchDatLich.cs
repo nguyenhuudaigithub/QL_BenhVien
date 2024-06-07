@@ -2,7 +2,7 @@
 {
     public class FetchDatLich
     {
-        public string email { get; set; }
-        public string CCCD { get; set; }
+        public string MaHoSo { get; set; }
+        public string SDT { get; set; }
     }
 }

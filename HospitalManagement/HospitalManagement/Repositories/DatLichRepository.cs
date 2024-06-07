@@ -20,9 +20,9 @@ namespace HospitalManagement.Repositories
             return _mapper.Map<DatLichModel>(DatLich);
         }
 
-        public async Task<List<DatLichModel>> GetDatLichByEmailAndCCCDAsync(string email, string CCCD)
+        public async Task<List<DatLichModel>> GetDatLichBySDTAndMaHoSoAsync(string maHoSo, string SDT)
         {
-            var HoSo = await _context.Hosos!.SingleOrDefaultAsync(b => (b.Email == email && b.CCCD == CCCD));
+            var HoSo = await _context.Hosos!.SingleOrDefaultAsync(b => (b.MaHoSo == maHoSo && b.SDT == SDT));
 
             if (HoSo == null)
             {
@@ -30,9 +30,9 @@ namespace HospitalManagement.Repositories
             }
             else
             {
-                var QuocTich = await _context.QuocTichs!.SingleOrDefaultAsync(b => (b.id == HoSo.IdQuocTich));
-                var DanToc = await _context.DanTocs!.SingleOrDefaultAsync(b => (b.id == HoSo.IdDanToc));
-                var NgheNghiep = await _context.NgheNghieps!.SingleOrDefaultAsync(b => (b.id == HoSo.IdNgheNghiep));
+                //var QuocTich = await _context.QuocTichs!.SingleOrDefaultAsync(b => (b.id == HoSo.IdQuocTich));
+                //var DanToc = await _context.DanTocs!.SingleOrDefaultAsync(b => (b.id == HoSo.IdDanToc));
+                //var NgheNghiep = await _context.NgheNghieps!.SingleOrDefaultAsync(b => (b.id == HoSo.IdNgheNghiep));
 
                 var datLichEntities = await _context.DatLichs!.Where(d => d.MaHoSo == HoSo.MaHoSo).ToListAsync();
 
@@ -50,10 +50,11 @@ namespace HospitalManagement.Repositories
                         MoTa = datLichEntity.MoTa,
                         ChiTietChuanDoan = datLichEntity.ChiTietChuanDoan,
                         LoiDan = datLichEntity.LoiDan,
-                        QuocTich = QuocTich.TenQuocTich,
-                        DanToc = DanToc.TenDanToc,
-                        NgheNghiep = NgheNghiep.TenNgheNghiep
+                        //QuocTich = QuocTich.TenQuocTich,
+                        //DanToc = DanToc.TenDanToc,
+                        //NgheNghiep = NgheNghiep.TenNgheNghiep
                     };
+
 
                     datLichModels.Add(datLichModel);
                 }
