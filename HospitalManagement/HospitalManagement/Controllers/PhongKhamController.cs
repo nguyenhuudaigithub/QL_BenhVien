@@ -37,7 +37,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "RequireAdmin")]
+        //[Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddNewPhongKham(PhongKhamModel model)
         {
             try

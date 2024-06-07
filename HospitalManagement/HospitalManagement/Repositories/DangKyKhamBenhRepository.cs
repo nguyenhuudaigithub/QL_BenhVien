@@ -2,7 +2,6 @@
 using HospitalManagement.Data;
 using HospitalManagement.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace HospitalManagement.Repositories
 {
@@ -107,11 +106,11 @@ namespace HospitalManagement.Repositories
                 throw new Exception("Số lượng bệnh nhân của phòng khám đã đầy.");
             }
 
-            var checkDatLich = await _context.DatLichs.Where(b => b.MaHoSo == dangKyModel.MaHoSo && b.GioKham == dangKyModel.GioKham && b.IdPhong == b.IdPhong && b.NgayKham == dangKyModel.NgayKham).ToListAsync();
-            if (checkDatLich.Count >= 1)
-            {
-                throw new Exception("Bệnh nhân này đã đăng ký khám vào thời gian này.");
-            }
+            //var checkDatLich = await _context.DatLichs.Where(b => b.MaHoSo == dangKyModel.MaHoSo && b.GioKham == dangKyModel.GioKham && b.IdPhong == b.IdPhong && b.NgayKham == dangKyModel.NgayKham).ToListAsync();
+            //if (checkDatLich.Count >= 1)
+            //{
+            //    throw new Exception("Bệnh nhân này đã đăng ký khám vào thời gian này.");
+            //}
 
             var datLichNew = new DatLich
             {
@@ -121,7 +120,7 @@ namespace HospitalManagement.Repositories
                 IdPhong = dangKyModel.IdPhong,
                 NgayTao = DateTime.Now, // Gán ngày tạo mới cho ngày tạo
                 GioKham = dangKyModel.GioKham,
-                
+
                 // Gán MaHoSo từ existingHoSo
                 MaHoSo = convertHoSoModel.MaHoSo
             };

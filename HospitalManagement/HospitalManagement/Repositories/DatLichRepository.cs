@@ -34,7 +34,6 @@ namespace HospitalManagement.Repositories
                 var DanToc = await _context.DanTocs!.SingleOrDefaultAsync(b => (b.id == HoSo.IdDanToc));
                 var NgheNghiep = await _context.NgheNghieps!.SingleOrDefaultAsync(b => (b.id == HoSo.IdNgheNghiep));
 
-
                 var datLichEntities = await _context.DatLichs!.Where(d => d.MaHoSo == HoSo.MaHoSo).ToListAsync();
 
                 var datLichModels = new List<DatLichModel>();
