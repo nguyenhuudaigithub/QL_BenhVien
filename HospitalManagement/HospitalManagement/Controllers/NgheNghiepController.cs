@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Controllers
@@ -36,6 +37,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddNewNgheNghiep(NgheNghiepModel model)
         {
             try
@@ -50,6 +52,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> UpdateNgheNghiep(int id, [FromBody] NgheNghiepModel model)
         {
             await _ngheNghiepRepo.UpdateNgheNghiepAsync(id, model);
@@ -57,6 +60,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> DeleteNgheNghiep([FromRoute] int id)
         {
             await _ngheNghiepRepo.DeleteNgheNghiepAsync(id);

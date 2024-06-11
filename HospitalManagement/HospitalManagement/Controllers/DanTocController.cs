@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Controllers
@@ -36,6 +37,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddNewDanToc(DanTocModel model)
         {
             try
@@ -50,6 +52,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> UpdateDanToc(int id, [FromBody] DanTocModel model)
         {
             await _danTocRepo.UpdateDanTocAsync(id, model);
@@ -57,6 +60,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> DeleteDanToc([FromRoute] int id)
         {
             await _danTocRepo.DeleteDanTocAsync(id);

@@ -46,6 +46,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireDuocSi")]
         public async Task<IActionResult> AddNewThuoc([FromBody] ThuocModel model)
         {
             if (!ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireDuocSi")]
         public async Task<IActionResult> UpdateThuoc(int id, [FromBody] ThuocModel model)
         {
             if (!ModelState.IsValid)
@@ -84,6 +86,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireDuocSi")]
         public async Task<IActionResult> DeleteThuoc(int id)
         {
             try

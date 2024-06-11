@@ -117,17 +117,7 @@ namespace HospitalManagement.Controllers
         public async Task<IActionResult> AddRoleToUser(string email, string role)
         {
             string[] roleNames = { "BacSi", "BacSiChiDinh", "DuocSi", "Admin" };
-            bool checkRole = false;
-
-            foreach (var roleName in roleNames)
-            {
-                if (role == roleName)
-                {
-                    checkRole = true;
-                }
-            }
-
-            if (!checkRole)
+            if (!roleNames.Contains(role))
             {
                 return BadRequest("Quyền " + role + " không tồn tại");
             }
@@ -138,29 +128,50 @@ namespace HospitalManagement.Controllers
                 return NotFound("Người dùng không tồn tại");
             }
 
-            var result = await userManager.AddToRoleAsync(user, role);
+            var currentRoles = await userManager.GetRolesAsync(user);
 
-            if (!result.Succeeded)
+            // Remove all existing roles
+            var removeResult = await userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded)
             {
-                return BadRequest(result.Errors);
+                return BadRequest("Không thể xóa quyền hiện tại: " + string.Join(", ", removeResult.Errors.Select(e => e.Description)));
             }
 
-            return Ok("Đã thêm quyền cho người dùng " + email);
+            // Add new role
+            var addResult = await userManager.AddToRoleAsync(user, role);
+            if (!addResult.Succeeded)
+            {
+                return BadRequest("Không thể thêm quyền mới: " + string.Join(", ", addResult.Errors.Select(e => e.Description)));
+            }
+
+            return Ok("Đã cập nhật quyền cho người dùng " + email + " thành " + role);
         }
 
-        [HttpGet("check-user")]
-        [Authorize(Policy = "RequireAll")]
-        public async Task<IActionResult> test(string email)
+        [HttpGet("get-users-in-role")]
+        //[Authorize(Policy = "RequireAdmin")]
+        public async Task<IActionResult> GetUsersInRole(string role)
         {
-            var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return NotFound("Người dùng không tồn tại");
-            }
+            var usersInRole = await userManager.GetUsersInRoleAsync(role);
+            //if (usersInRole == null || !usersInRole.Any())
+            //{
+            //    return NotFound("Không có người dùng nào có vai trò " + role);
+            //}
 
-
-            return Ok(new { user = user });
+            return Ok(usersInRole);
         }
+
+        //[HttpPost("get-bac-si")]
+        ////[Authorize(Policy = "RequireAdmin")]
+        //public async Task<IActionResult> GetBacSis()
+        //{
+        //    var usersInRole = await userManager.GetUsersInRoleAsync("BacSi");
+        //    if (usersInRole == null || !usersInRole.Any())
+        //    {
+        //        return NotFound("Không có người dùng nào có vai trò BacSi");
+        //    }
+
+        //    return Ok(usersInRole);
+        //}
 
     }
 }

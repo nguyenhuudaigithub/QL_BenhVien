@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using HospitalManagement.Models;
+﻿using HospitalManagement.Models;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagement.Controllers
 {
@@ -37,6 +37,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> AddNewQuocTich(QuocTichModel model)
         {
             try
@@ -54,6 +55,7 @@ namespace HospitalManagement.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> UpdateQuocTich(int id, [FromBody] QuocTichModel model)
         {
             await _QuocTichRepo.UpdateQuocTichAsync(id, model);
@@ -61,6 +63,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdmin")]
         public async Task<IActionResult> DeleteQuocTich([FromRoute] int id)
         {
             await _QuocTichRepo.DeleteQuocTichAsync(id);
