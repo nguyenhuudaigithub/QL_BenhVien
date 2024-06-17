@@ -13,6 +13,7 @@ namespace HospitalManagement.Controllers
         private readonly SignInManager<NguoiDung> signInManager = sm;
         private readonly UserManager<NguoiDung> userManager = um;
 
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterModel user)
         {
