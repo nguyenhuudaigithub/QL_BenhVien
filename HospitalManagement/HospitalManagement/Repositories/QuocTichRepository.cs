@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using HospitalManagement.Data;
 using HospitalManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Repositories
 {
@@ -49,7 +49,7 @@ namespace HospitalManagement.Repositories
         public async Task UpdateQuocTichAsync(int id, QuocTichModel model)
         {
             var getId = _context.QuocTichs!.SingleOrDefault(b => b.id == id);
-            if (getId != null && getId.id == model.id)
+            if (getId != null && getId.id == id)
             {
                 getId.TenQuocTich = model.TenQuocTich;
                 getId.TenVietTat = model.TenVietTat;

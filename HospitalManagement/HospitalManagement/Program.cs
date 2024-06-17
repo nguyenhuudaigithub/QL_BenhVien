@@ -1,6 +1,7 @@
 using HospitalManagement.Data;
 using HospitalManagement.Helpers;
 using HospitalManagement.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,17 @@ builder.Services.AddIdentityCore<NguoiDung>(options =>
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<DataContext>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.SlidingExpiration = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireBacSi", policy => policy.RequireRole("BacSi", "Admin"));
@@ -90,6 +102,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 app.MapIdentityApi<NguoiDung>();
